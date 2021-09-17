@@ -1,0 +1,24 @@
+{
+  "name": "ubeswap-only-swap-two",
+  "version": "0.1.0",
+  "scripts": {
+    "create": "graph create teuul/ubeswap-only-swap-two --node https://api.thegraph.com/deploy/",
+    "create-local": "graph create teuul/ubeswap-only-swap-two --node http://127.0.0.1:8020",
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "deploy": "graph deploy teuul/ubeswap-only-swap-two --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
+    "deploy-local": "graph deploy teuul/ubeswap-only-swap-two --ipfs http://localhost:5001 --node http://127.0.0.1:8020"
+  },
+  "devDependencies": {
+    "@graphprotocol/graph-cli": "^0.20.1",
+    "@graphprotocol/graph-ts": "^0.20.1"
+  },
+  "dependencies": {
+    "assemblyscript": "^0.19.16",
+    "babel-polyfill": "^6.26.0",
+    "babel-register": "^6.26.0",
+    "truffle": "^5.0.4",
+    "truffle-contract": "^4.0.5",
+    "truffle-hdwallet-provider": "^1.0.4"
+  }
+}

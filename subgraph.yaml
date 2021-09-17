@@ -1,0 +1,72 @@
+specVersion: 0.0.2
+description: Supporting only Swap events
+repository: none
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: Factory
+    network: celo
+    source:
+      address: "0x62d5b84bE28a183aBB507E125B384122D2C25fAE"
+      abi: Factory
+      startBlock: 5272596
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Pair
+        - Token
+      abis:
+        - name: Factory
+          file: ./abis/Factory.json
+      eventHandlers:
+        - event: PairCreated(indexed address,indexed address,address,uint256)
+          handler: handleNewPair
+      file: ./src/factory.ts
+  - kind: ethereum/contract
+    name: UbeswapMoolaRouter
+    network: celo
+    source:
+      address: "0x56d0Ae52f33f7C2e38E92F6D20b8ccfD7Dc318Ce"
+      abi: UbeswapMoolaRouter
+      startBlock: 5272596
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Transaction
+        - Swap
+      abis:
+        - name: UbeswapMoolaRouter
+          file: ./abis/UbeswapMoolaRouter.json
+      eventHandlers:
+        - event: TokensSwapped(indexed address,indexed address[],indexed address,uint256,uint256)
+          handler: handleTokensSwapped
+      file: ./src/moolaRouter.ts
+templates:
+  - kind: ethereum/contract
+    name: Pair
+    network: celo
+    source:
+      abi: Pair
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ./src/pair.ts
+      entities:
+        - Event
+        - Field
+        - ArrayField
+        - Item
+      abis:
+        - name: Pair
+          file: ./abis/Pair.json
+        - name: Factory
+          file: ./abis/Factory.json
+      eventHandlers:
+        - event: Swap(indexed address,uint256,uint256,uint256,uint256,indexed address)
+          handler: handleSwap

@@ -1,0 +1,543 @@
+[
+    {
+        "type": "constructor",
+        "stateMutability": "nonpayable",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "router_",
+                "internalType": "address"
+            },
+            {
+                "type": "address",
+                "name": "owner_",
+                "internalType": "address"
+            }
+        ]
+    },
+    {
+        "type": "event",
+        "name": "Deposited",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "reserve",
+                "internalType": "address",
+                "indexed": true
+            },
+            {
+                "type": "address",
+                "name": "account",
+                "internalType": "address",
+                "indexed": true
+            },
+            {
+                "type": "uint8",
+                "name": "reason",
+                "internalType": "enum ILendingPoolWrapper.Reason",
+                "indexed": true
+            },
+            {
+                "type": "uint256",
+                "name": "amount",
+                "internalType": "uint256",
+                "indexed": false
+            }
+        ],
+        "anonymous": false
+    },
+    {
+        "type": "event",
+        "name": "OwnershipTransferred",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "previousOwner",
+                "internalType": "address",
+                "indexed": true
+            },
+            {
+                "type": "address",
+                "name": "newOwner",
+                "internalType": "address",
+                "indexed": true
+            }
+        ],
+        "anonymous": false
+    },
+    {
+        "type": "event",
+        "name": "Recovered",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "token",
+                "internalType": "address",
+                "indexed": true
+            },
+            {
+                "type": "uint256",
+                "name": "amount",
+                "internalType": "uint256",
+                "indexed": false
+            }
+        ],
+        "anonymous": false
+    },
+    {
+        "type": "event",
+        "name": "TokensSwapped",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "account",
+                "internalType": "address",
+                "indexed": true
+            },
+            {
+                "type": "address[]",
+                "name": "path",
+                "internalType": "address[]",
+                "indexed": true
+            },
+            {
+                "type": "address",
+                "name": "to",
+                "internalType": "address",
+                "indexed": true
+            },
+            {
+                "type": "uint256",
+                "name": "amountIn",
+                "internalType": "uint256",
+                "indexed": false
+            },
+            {
+                "type": "uint256",
+                "name": "amountOut",
+                "internalType": "uint256",
+                "indexed": false
+            }
+        ],
+        "anonymous": false
+    },
+    {
+        "type": "event",
+        "name": "Withdrawn",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "reserve",
+                "internalType": "address",
+                "indexed": true
+            },
+            {
+                "type": "address",
+                "name": "account",
+                "internalType": "address",
+                "indexed": true
+            },
+            {
+                "type": "uint8",
+                "name": "reason",
+                "internalType": "enum ILendingPoolWrapper.Reason",
+                "indexed": true
+            },
+            {
+                "type": "uint256",
+                "name": "amount",
+                "internalType": "uint256",
+                "indexed": false
+            }
+        ],
+        "anonymous": false
+    },
+    {
+        "type": "function",
+        "stateMutability": "view",
+        "outputs": [
+            {
+                "type": "uint16",
+                "name": "",
+                "internalType": "uint16"
+            }
+        ],
+        "name": "MOOLA_ROUTER_REFERRAL_CODE",
+        "inputs": []
+    },
+    {
+        "type": "function",
+        "stateMutability": "pure",
+        "outputs": [
+            {
+                "type": "uint256[]",
+                "name": "",
+                "internalType": "uint256[]"
+            }
+        ],
+        "name": "computeAmountsFromRouterAmounts",
+        "inputs": [
+            {
+                "type": "uint256[]",
+                "name": "_routerAmounts",
+                "internalType": "uint256[]"
+            },
+            {
+                "type": "address",
+                "name": "_reserveIn",
+                "internalType": "address"
+            },
+            {
+                "type": "address",
+                "name": "_reserveOut",
+                "internalType": "address"
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "stateMutability": "view",
+        "outputs": [
+            {
+                "type": "tuple",
+                "name": "",
+                "internalType": "struct UbeswapMoolaRouterLibrary.SwapPlan",
+                "components": [
+                    {
+                        "type": "address",
+                        "name": "reserveIn",
+                        "internalType": "address"
+                    },
+                    {
+                        "type": "address",
+                        "name": "reserveOut",
+                        "internalType": "address"
+                    },
+                    {
+                        "type": "bool",
+                        "name": "depositIn",
+                        "internalType": "bool"
+                    },
+                    {
+                        "type": "bool",
+                        "name": "depositOut",
+                        "internalType": "bool"
+                    },
+                    {
+                        "type": "address[]",
+                        "name": "nextPath",
+                        "internalType": "address[]"
+                    }
+                ]
+            }
+        ],
+        "name": "computeSwap",
+        "inputs": [
+            {
+                "type": "address[]",
+                "name": "_path",
+                "internalType": "address[]"
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "stateMutability": "view",
+        "outputs": [
+            {
+                "type": "address",
+                "name": "",
+                "internalType": "contract ILendingPoolCore"
+            }
+        ],
+        "name": "core",
+        "inputs": []
+    },
+    {
+        "type": "function",
+        "stateMutability": "nonpayable",
+        "outputs": [],
+        "name": "deposit",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "_reserve",
+                "internalType": "address"
+            },
+            {
+                "type": "uint256",
+                "name": "_amount",
+                "internalType": "uint256"
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "stateMutability": "view",
+        "outputs": [
+            {
+                "type": "uint256[]",
+                "name": "",
+                "internalType": "uint256[]"
+            }
+        ],
+        "name": "getAmountsIn",
+        "inputs": [
+            {
+                "type": "uint256",
+                "name": "_amountOut",
+                "internalType": "uint256"
+            },
+            {
+                "type": "address[]",
+                "name": "_path",
+                "internalType": "address[]"
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "stateMutability": "view",
+        "outputs": [
+            {
+                "type": "uint256[]",
+                "name": "",
+                "internalType": "uint256[]"
+            }
+        ],
+        "name": "getAmountsOut",
+        "inputs": [
+            {
+                "type": "uint256",
+                "name": "_amountIn",
+                "internalType": "uint256"
+            },
+            {
+                "type": "address[]",
+                "name": "_path",
+                "internalType": "address[]"
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "stateMutability": "view",
+        "outputs": [
+            {
+                "type": "address",
+                "name": "",
+                "internalType": "address"
+            }
+        ],
+        "name": "goldToken",
+        "inputs": []
+    },
+    {
+        "type": "function",
+        "stateMutability": "nonpayable",
+        "outputs": [],
+        "name": "initialize",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "_pool",
+                "internalType": "address"
+            },
+            {
+                "type": "address",
+                "name": "_core",
+                "internalType": "address"
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "stateMutability": "view",
+        "outputs": [
+            {
+                "type": "uint16",
+                "name": "",
+                "internalType": "uint16"
+            }
+        ],
+        "name": "moolaReferralCode",
+        "inputs": []
+    },
+    {
+        "type": "function",
+        "stateMutability": "view",
+        "outputs": [
+            {
+                "type": "address",
+                "name": "",
+                "internalType": "address"
+            }
+        ],
+        "name": "owner",
+        "inputs": []
+    },
+    {
+        "type": "function",
+        "stateMutability": "view",
+        "outputs": [
+            {
+                "type": "address",
+                "name": "",
+                "internalType": "contract ILendingPool"
+            }
+        ],
+        "name": "pool",
+        "inputs": []
+    },
+    {
+        "type": "function",
+        "stateMutability": "nonpayable",
+        "outputs": [],
+        "name": "recoverERC20",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "tokenAddress",
+                "internalType": "address"
+            },
+            {
+                "type": "uint256",
+                "name": "tokenAmount",
+                "internalType": "uint256"
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "stateMutability": "nonpayable",
+        "outputs": [],
+        "name": "renounceOwnership",
+        "inputs": []
+    },
+    {
+        "type": "function",
+        "stateMutability": "view",
+        "outputs": [
+            {
+                "type": "address",
+                "name": "",
+                "internalType": "contract IUbeswapRouter"
+            }
+        ],
+        "name": "router",
+        "inputs": []
+    },
+    {
+        "type": "function",
+        "stateMutability": "nonpayable",
+        "outputs": [
+            {
+                "type": "uint256[]",
+                "name": "amounts",
+                "internalType": "uint256[]"
+            }
+        ],
+        "name": "swapExactTokensForTokens",
+        "inputs": [
+            {
+                "type": "uint256",
+                "name": "amountIn",
+                "internalType": "uint256"
+            },
+            {
+                "type": "uint256",
+                "name": "amountOutMin",
+                "internalType": "uint256"
+            },
+            {
+                "type": "address[]",
+                "name": "path",
+                "internalType": "address[]"
+            },
+            {
+                "type": "address",
+                "name": "to",
+                "internalType": "address"
+            },
+            {
+                "type": "uint256",
+                "name": "deadline",
+                "internalType": "uint256"
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "stateMutability": "nonpayable",
+        "outputs": [
+            {
+                "type": "uint256[]",
+                "name": "amounts",
+                "internalType": "uint256[]"
+            }
+        ],
+        "name": "swapTokensForExactTokens",
+        "inputs": [
+            {
+                "type": "uint256",
+                "name": "amountOut",
+                "internalType": "uint256"
+            },
+            {
+                "type": "uint256",
+                "name": "amountInMax",
+                "internalType": "uint256"
+            },
+            {
+                "type": "address[]",
+                "name": "path",
+                "internalType": "address[]"
+            },
+            {
+                "type": "address",
+                "name": "to",
+                "internalType": "address"
+            },
+            {
+                "type": "uint256",
+                "name": "deadline",
+                "internalType": "uint256"
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "stateMutability": "nonpayable",
+        "outputs": [],
+        "name": "transferOwnership",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "newOwner",
+                "internalType": "address"
+            }
+        ]
+    },
+    {
+        "type": "function",
+        "stateMutability": "nonpayable",
+        "outputs": [],
+        "name": "withdraw",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "_reserve",
+                "internalType": "address"
+            },
+            {
+                "type": "uint256",
+                "name": "_amount",
+                "internalType": "uint256"
+            }
+        ]
+    },
+    {
+        "type": "receive",
+        "stateMutability": "payable"
+    }
+]

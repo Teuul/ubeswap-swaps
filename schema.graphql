@@ -1,0 +1,53 @@
+type Transaction @entity {
+    id: ID!
+    events: [Event!]
+    from: String!
+    blockNumber: BigInt!
+    stakeholders: [String!]
+}
+
+type Event @entity {
+  id: ID!
+  origin: String!
+  transaction: Transaction!
+  transactionLogIndex: BigInt!
+  type: String!
+  blockNumber: BigInt!
+  stakeholders: [String!]
+  data: [Field!] @derivedFrom(field: "event")
+  arraydata:[ArrayField!] @derivedFrom(field: "event")
+}
+
+type Field @entity {
+  id: ID!
+  name: String!
+  type: String!
+  value: String!
+  event: Event!
+}
+
+type ArrayField @entity {
+  id: ID!
+  name: String!
+  data: [Item!] @derivedFrom(field: "array")
+  event: Event!
+}
+
+type Item @entity {
+  id: ID!
+  value: String!
+  type: String!
+  array: ArrayField!
+}
+
+type Token @entity {
+  id: ID!
+  symbol: String
+  name: String
+  pairs: [Pair!] @derivedFrom(field: "tokens")
+}
+
+type Pair @entity {
+  id: ID!
+  tokens:[Token!]!
+}
